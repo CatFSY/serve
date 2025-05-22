@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实时视频展示</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <img src='' id="video" alt="实时视频">
+    <button id="refreshButton">刷新视频</button>
+    <button id="Button">成空</button>
+
+    <script>
+        const videoElement = document.getElementById('video');
+        const refreshButton = document.getElementById('refreshButton');
+        const Button = document.getElementById('Button');
+        refreshButton.onclick = function() {
+            // 更新 src 属性以重新加载视频
+            videoElement.src = 'http://127.0.0.1:8000/livedisplayRecord' ;
+        };
+        Button.onclick = function() {
+            // 更新 src 属性以重新加载视频
+            videoElement.src = '' ;
+        };
+    </script>
+</body>
+</html>

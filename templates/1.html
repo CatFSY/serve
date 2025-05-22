@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实时视频显示</title>
+</head>
+<body>
+    <h1>实时视频显示</h1>
+    <input type="text" id="name" placeholder="输入视频名称">
+    <select id="style">
+        <option value="1">样式 1</option>
+        <option value="2">样式 2</option>
+        <option value="3">样式 3</option>
+    </select>
+    <button onclick="loadVideo()">加载视频</button>
+    <video id="video" controls width="640" height="480">
+        <source id="videoSource" src="" type="video/mp4">
+        您的浏览器不支持视频标签。
+    </video>
+
+    <script>
+        function loadVideo() {
+            const name = document.getElementById("name").value;
+            const style = document.getElementById("style").value;
+
+            const url = `http://127.0.0.1:8000/stream_video?name=${encodeURIComponent(name)}&style=${style}`;
+
+            fetch(url)
+                .then(response => {
+                    if (response.ok) {
+                        return response.blob();
+                    } else {
+                        throw new Error("视频未找到！");
+                    }
+                })
+                .then(videoBlob => {
+                    const videoUrl = URL.createObjectURL(videoBlob);
+                    const videoSource = document.getElementById("videoSource");
+                    videoSource.src = videoUrl;
+                    document.getElementById("video").load();
+                })
+                .catch(error => {
+                    alert(error.message);
+                });
+        }
+    </script>
+</body>
+</html>
